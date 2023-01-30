@@ -1,10 +1,12 @@
+import { Container } from 'semantic-ui-react';
 import './App.css';
+import LandingPage from './components/Landing_page';
 
 function App() {
   return (
-    <div className="App">
-      Hello
-    </div>
+    <Container>
+      <LandingPage/>
+    </Container>
   );
 }
 

@@ -4,9 +4,9 @@ import LandingPage from './components/Landing_page';
 
 function App() {
   return (
-    <Container>
+  //   <Container>
       <LandingPage/>
-    </Container>
+    // </Container>
   );
 }
 

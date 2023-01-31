@@ -1,13 +1,14 @@
 import React from 'react';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 const extra = (
     <div className='extra'>
         <Button inverted color='blue'>
-            Explore
+            <Link to='/all-products'><p>Explore</p></Link>
         </Button>
         <Button color='twitter'>
-            Log In
+            <Link to='/login'><p>Log In</p></Link>
         </Button>
     </div>
 )

@@ -11,8 +11,14 @@ function App() {
     <Container>
       <Router> 
         <Switch>
-          <Route path='/'>
+          <Route exact path='/'>
             <LandingPage />
+          </Route>
+          <Route path='/all-products'>
+            <AllProducts />
+          </Route>
+          <Route path='/login'>
+            <Login />
           </Route>
         </Switch>
         

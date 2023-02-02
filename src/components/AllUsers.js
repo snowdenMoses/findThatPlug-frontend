@@ -3,10 +3,8 @@ import UsersContext from './context_api'
 
 function AllUsers() {
   const [users, setUsers] = useContext(UsersContext)
-  
-
   useEffect(()=>{
-    // console.log("users", users)
+
   }, [users])
   return (
     <div>{users.map(user=>{

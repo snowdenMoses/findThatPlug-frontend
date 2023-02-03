@@ -8,7 +8,10 @@ const extra = (
             <Link to='/all-products'><p>Explore</p></Link>
         </Button>
         <Button color='twitter'>
-            <Link to='/login'><p>Log In</p></Link>
+            <Link to='/vendor-login'><p>Vendor</p></Link>
+        </Button>
+        <Button color='twitter'>
+            <Link to='/customer-login'><p>Cuustomer</p></Link>
         </Button>
     </div>
 )

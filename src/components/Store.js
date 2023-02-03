@@ -7,7 +7,7 @@ function Store({ children }) {
         axios
             .get('http://localhost:3000/api/v1/users')
             .then((res) => {
-                setUsers(res.data.data)
+                setUsers(res.data)
             })
             .catch((error) => {
                 console.log(error)

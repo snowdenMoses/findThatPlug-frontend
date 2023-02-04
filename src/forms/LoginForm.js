@@ -1,25 +1,13 @@
 import React from 'react';
 import { Button, Form, Segment, Header } from 'semantic-ui-react';
 
-
-
-const SignUpForm = (props) => {
+const LogInForm = (props) => {
     return(
         <>
             <div className='signup_form'> 
                 <Header as='h3'>{props.header}</Header>
                 <Segment inverted >
                         <Form inverted onSubmit={props.handleSubmit}>
-                        <Form.Input fluid 
-                                label='First name'
-                                placeholder='First name' 
-                                value={props.first_name}
-                                onChange={(e) => props.setFirst_name(e.target.value)}/>
-                        <Form.Input fluid 
-                                label='Last name' 
-                                placeholder='Last name' 
-                                value={props.last_name} 
-                                onChange={(e) => props.setLast_name(e.target.value)} />
                         <Form.Input fluid 
                                 label='Email' 
                                 placeholder='email address' 
@@ -30,7 +18,7 @@ const SignUpForm = (props) => {
                                 placeholder='Password' 
                                 value={props.password} 
                                 onChange={(e) => props.setPassword(e.target.value)}/>
-                        <Button type='submit'>Add User</Button>
+                        <Button type='submit'>Login</Button>
                     </Form>
                 </Segment>
             </div>
@@ -38,4 +26,4 @@ const SignUpForm = (props) => {
 
 )
     }
-export default SignUpForm
+export default LogInForm

@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { useJwt } from "react-jwt";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
 function VendorDashboard() {
   const token = localStorage.getItem('token')
-  const { decodedToken, isExpired } = useJwt(token)
   const [user, setUser] = useState()
   const decoded = jwt_decode(token);
   const user_id = decoded?.user_id
@@ -19,6 +17,7 @@ function VendorDashboard() {
       .catch((error) => {
         console.log(error)
       })
+    // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }, [])
   return (
     

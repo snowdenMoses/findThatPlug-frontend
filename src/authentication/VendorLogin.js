@@ -7,6 +7,7 @@ function VendorLogin() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const header = "Vendor Log In"
+  const token = localStorage.getItem('token')
 
   const history = useHistory()
   const handleSubmit = (e) => {
@@ -20,6 +21,7 @@ function VendorLogin() {
         history.push("/vendor-dashboard")
       }
     }).catch(error => alert(error.response.data.error))
+  //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
   return (
     <div>

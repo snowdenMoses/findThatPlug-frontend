@@ -5,18 +5,19 @@ import './App.css';
 import LandingPage from './components/Landing_page';
 import AllProducts from './components/AllProducts';
 import AllUsers from './components/AllUsers';
-import AddVendor from './components/AddVendor';
+import AddVendor from './components/vendors/AddVendor';
 import CustomerLogin from './components/CustomerLogin';
-import EditVendorDetails from './components/EditVendorDetails';
-import VendorDashboard from './components/VendorDashboard';
-import AuthenticatedComponent from './components/AuthenticatedComponent';
-import VendorLogin from './auth/VendorLogin';
+import EditVendorDetails from './components/vendors/EditVendorDetails';
+import VendorDashboard from './components/vendors/VendorDashboard';
+import AuthenticatedComponent from './authorization/AuthenticatedComponent';
+import RedirectLogin from './authorization/RedirectLogin';
+import VendorLogin from './authentication/VendorLogin';
 
 function App() {
   return (
     <Store>
       <Container>
-        <Router> 
+        <Router>
           <Switch>
             <Route exact path='/'>
               <LandingPage />
@@ -33,19 +34,21 @@ function App() {
             <Route path='/customer-login'>
               <CustomerLogin />
             </Route>
+            {/* <RedirectLogin> */}
             <Route path='/vendor-login'>
               <VendorLogin />
             </Route>
+            {/* </RedirectLogin> */}
             <AuthenticatedComponent>
               <Route path='/vendor-dashboard'>
                 <VendorDashboard />
               </Route>
             </AuthenticatedComponent>
-            <AuthenticatedComponent>
+            {/* <AuthenticatedComponent> */}
               <Route path='/edit-vendor-details'>
                 <EditVendorDetails />
               </Route>
-            </AuthenticatedComponent>
+            {/* </AuthenticatedComponent> */}
           </Switch>
         </Router>
       </Container>

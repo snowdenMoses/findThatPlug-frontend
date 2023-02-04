@@ -7,6 +7,7 @@ import AllProducts from './components/AllProducts';
 import AllUsers from './components/AllUsers';
 import AddVendor from './components/AddVendor';
 import CustomerLogin from './components/CustomerLogin';
+import EditVendorDetails from './components/EditVendorDetails';
 import VendorDashboard from './components/VendorDashboard';
 import VendorLogin from './auth/VendorLogin';
 
@@ -36,6 +37,9 @@ function App() {
             </Route>
             <Route path='/vendor-dashboard'>
               <VendorDashboard />
+            </Route>
+            <Route path='/edit-vendor-details'>
+              <EditVendorDetails />
             </Route>
           </Switch>
         </Router>

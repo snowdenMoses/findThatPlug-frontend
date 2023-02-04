@@ -20,9 +20,13 @@ function VendorDashboard() {
       })
   }, [])
   return (
+    
     <div>
-      <h2> {user?.first_name} </h2>
+      {user ?
+      <h2> {user?.first_name + " " + user?.last_name + " " + user?.email} </h2>
+        : ""}
     </div>
+    
   )
 }
 

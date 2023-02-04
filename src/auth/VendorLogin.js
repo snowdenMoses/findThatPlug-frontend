@@ -16,7 +16,6 @@ function VendorLogin() {
       password
     }).then(response => {
       localStorage.setItem("token", response.data.token)
-      localStorage.setItem("user_id", response.data.user_id)
       if(response){
         history.push("/vendor-dashboard")
       }

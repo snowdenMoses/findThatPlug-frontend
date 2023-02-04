@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Message } from 'semantic-ui-react';
 import SignUpForm from '../forms/SignUpForm'
-
+import jwt_decode from "jwt-decode"; 
 const EditVendorDetails = () => {
     const [first_name, setFirst_name] = useState("")
     const [last_name, setLast_name] = useState("")
@@ -12,9 +12,23 @@ const EditVendorDetails = () => {
     const [flashMessageState, setFlashMessageState] = useState()
     const [flashMessage, setFlashMessage] = useState(null)
     const header = "Edit Personal Details"
-    const user_id = localStorage.getItem('user_id')
+    const token = localStorage.getItem('token')
+    const decoded = jwt_decode(token);
+    const user_id = decoded?.user_id
 
     const history = useHistory()
+    const findRecords = () => {
+        axios
+            .get(`http://localhost:3000/api/v1/users/${user_id}`)
+            .then((res) => {
+                setFirst_name(res.data.first_name)
+                setLast_name(res.data.last_name)                
+                setEmail(res.data.email)                
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
     const handleSubmit = (e)=>{
         e.preventDefault()
         axios.patch(`http://localhost:3000/api/v1/users/${user_id}`, {
@@ -41,6 +55,10 @@ const EditVendorDetails = () => {
             }
         })
     }
+
+    useEffect(()=>{
+        findRecords()
+    },[])
     return(
 <>
     {flashMessageState && flashMessage !== null ? 

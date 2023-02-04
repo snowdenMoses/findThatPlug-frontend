@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import UsersContext from './context_api'
+import UsersContext from '../context/context_api'
 
 function AllUsers() {
   const [users, setUsers] = useContext(UsersContext)

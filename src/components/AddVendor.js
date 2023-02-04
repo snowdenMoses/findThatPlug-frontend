@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Message } from 'semantic-ui-react';
-import SignUpForm from './SignUpForm'
-
-
+import SignUpForm from '../forms/SignUpForm'
 
 const AddVendor = () => {
     const [first_name, setFirst_name] = useState("")
@@ -12,7 +10,7 @@ const AddVendor = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [flashMessageState, setFlashMessageState] = useState()
-    const [flashMessage, setFlashMessage] = useState("")
+    const [flashMessage, setFlashMessage] = useState(null)
     const header = "Vendor Sign Up"
 
     const history = useHistory()
@@ -24,30 +22,33 @@ const AddVendor = () => {
             email,
             password
         }).then(response => { 
-            if(response.request.status === 201){
                 setFlashMessage(response.data.message)
-                console.log(response)
-                setFlashMessageState(true)
+                setFlashMessageState('green')
                 setTimeout(() => {
-                    setFlashMessageState(false)
+                    setFlashMessageState('')
+                    history.push("/vendor-dashboard")
+                }, 4000)
+           
+        }).catch(error => {
+        const errors = error.response.data.data
+            for(error in errors){
+                setFlashMessage(error + " " + errors[error][0])
+                setFlashMessageState('red')
+                setTimeout(() => {
+                    setFlashMessageState('')
                 }, 4000)
             }
-            else if (response.AxiosError.request.status === 409) {
-                setFlashMessage(response.data.message)
-                console.log(response)
-            }
         })
-         
-        // history.push("/all-users")
     }
     return(
 <>
-    {flashMessageState && flashMessage ? 
-                <Message 
-                color='green' 
-                className='flash_message_state'>
-                    {flashMessage}
-                </Message> 
+    {flashMessageState && flashMessage !== null ? 
+                <div className='flash_message'>
+                    <Message 
+                        color={flashMessageState} >
+                            {flashMessage}
+                    </Message> 
+                </div>
     : ""}
             <SignUpForm
             first_name={first_name}

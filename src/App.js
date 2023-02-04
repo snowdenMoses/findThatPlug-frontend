@@ -1,14 +1,14 @@
 import { Container } from 'semantic-ui-react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Store from './components/Store';
+import Store from './context/Store';
 import './App.css';
 import LandingPage from './components/Landing_page';
 import AllProducts from './components/AllProducts';
 import AllUsers from './components/AllUsers';
-import Login from './components/Login';
 import AddVendor from './components/AddVendor';
 import CustomerLogin from './components/CustomerLogin';
-import VendorLogin from './components/VendorLogin';
+import VendorDashboard from './components/VendorDashboard';
+import VendorLogin from './auth/VendorLogin';
 
 function App() {
   return (
@@ -22,9 +22,6 @@ function App() {
             <Route path='/all-products'>
               <AllProducts />
             </Route>
-            <Route path='/login'>
-              <Login />
-            </Route>
             <Route path='/all-users'>
               <AllUsers />
             </Route>
@@ -36,6 +33,9 @@ function App() {
             </Route>
             <Route path='/vendor-login'>
               <VendorLogin />
+            </Route>
+            <Route path='/vendor-dashboard'>
+              <VendorDashboard />
             </Route>
           </Switch>
         </Router>

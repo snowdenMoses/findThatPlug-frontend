@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Message } from 'semantic-ui-react';
 import SignUp from '../../forms/MUI-signup'
 import jwt_decode from "jwt-decode";
 import AxiosInstance from '../../authorization/AxiosInstance';

@@ -3,6 +3,7 @@ import UsersContext from './context_api'
 import axios from 'axios'
 function Store({ children }) {
     const [users, setUsers] = useState([])
+    const [products, setProducts] = useState([])
     useEffect(() => {
         axios
             .get('http://localhost:3000/api/v1/users')
@@ -12,9 +13,18 @@ function Store({ children }) {
             .catch((error) => {
                 console.log(error)
             })
+
+        axios
+            .get('http://localhost:3000/api/v1/products')
+            .then((res) => {
+                setProducts(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }, [])
     return (
-        <UsersContext.Provider value={[users, setUsers]}>
+        <UsersContext.Provider value={[users, products]}>
             {children}
         </UsersContext.Provider>
     )

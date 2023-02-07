@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import jwt_decode from 'jwt-decode';
 import AxiosInstance from '../../authorization/AxiosInstance';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Dashboard from '../../dashboard/Dashboard'
 
 function VendorDashboard() {
   const token = localStorage.getItem('token')
@@ -27,11 +27,12 @@ function VendorDashboard() {
     <>
     <CssBaseline />
       <Container fixed>
-        <div>
+        {/* <div>
           {user ?
             <h2> {user?.first_name + " " + user?.last_name + " " + user?.email} </h2>
             : ""}
-        </div>
+        </div> */}
+        <Dashboard/>
       </Container>
     </>
     

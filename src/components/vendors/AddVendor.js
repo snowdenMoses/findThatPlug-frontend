@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { Message } from 'semantic-ui-react';
-import SignUpForm from '../../forms/SignUpForm';
+import SignUp from '../../forms/MUI-signup';
 import AxiosInstance from '../../authorization/AxiosInstance';
+import CustomizedSnackbars from '../CustomizedSnackbar';
 
 const AddVendor = () => {
     const [first_name, setFirst_name] = useState("")
@@ -13,6 +12,8 @@ const AddVendor = () => {
     const [flashMessageState, setFlashMessageState] = useState()
     const [flashMessage, setFlashMessage] = useState(null)
     const header = "Vendor Sign Up"
+    const already_have_an_account = "Already have an account?Sign In"
+    const action = "Sign Up"
 
     const history = useHistory()
     const handleSubmit = (e) => {
@@ -23,9 +24,10 @@ const AddVendor = () => {
             email,
             password
         }).then(response => {
-            console.log("response", response)
+            console.log(response.data.data)
+            localStorage.setItem("token", response.data.token)
             setFlashMessage(response.data.message)
-            setFlashMessageState('green')
+            setFlashMessageState('success')
             setTimeout(() => {
                 setFlashMessageState('')
                 history.push("/vendor-dashboard")
@@ -35,7 +37,7 @@ const AddVendor = () => {
             const errors = error.response.data.data
             for (error in errors) {
                 setFlashMessage(error + " " + errors[error][0])
-                setFlashMessageState('red')
+                setFlashMessageState('error')
                 setTimeout(() => {
                     setFlashMessageState('')
                 }, 4000)
@@ -46,13 +48,10 @@ const AddVendor = () => {
         <>
             {flashMessageState && flashMessage !== null ?
                 <div className='flash_message'>
-                    <Message
-                        color={flashMessageState} >
-                        {flashMessage}
-                    </Message>
+                    <CustomizedSnackbars severity={flashMessageState} message={flashMessage}/>
                 </div>
                 : ""}
-            <SignUpForm
+            <SignUp
                 first_name={first_name}
                 setFirst_name={setFirst_name}
                 last_name={last_name}
@@ -63,6 +62,8 @@ const AddVendor = () => {
                 setPassword={setPassword}
                 handleSubmit={handleSubmit}
                 header={header}
+                already_have_an_account ={already_have_an_account}
+                action={action}
             />
         </>
 

@@ -1,4 +1,4 @@
-import { Container } from 'semantic-ui-react';
+import Container from '@mui/material/Container';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Store from './context/Store';
 import './App.css';
@@ -16,7 +16,7 @@ import VendorLogin from './authentication/VendorLogin';
 function App() {
   return (
     <Store>
-      <Container>
+      <Container fixed>
         <Router>
           <Switch>
             <Route exact path='/'>
@@ -34,21 +34,17 @@ function App() {
             <Route path='/customer-login'>
               <CustomerLogin />
             </Route>
-            {/* <RedirectLogin> */}
             <Route path='/vendor-login'>
               <VendorLogin />
             </Route>
-            {/* </RedirectLogin> */}
             <AuthenticatedComponent>
-              <Route path='/vendor-dashboard'>
-                <VendorDashboard />
+                <Route path='/vendor-dashboard'>
+                  <VendorDashboard />
               </Route>
-            </AuthenticatedComponent>
-            {/* <AuthenticatedComponent> */}
               <Route path='/edit-vendor-details'>
                 <EditVendorDetails />
               </Route>
-            {/* </AuthenticatedComponent> */}
+            </AuthenticatedComponent>
           </Switch>
         </Router>
       </Container>

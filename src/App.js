@@ -34,21 +34,17 @@ function App() {
             <Route path='/customer-login'>
               <CustomerLogin />
             </Route>
-            {/* <RedirectLogin> */}
             <Route path='/vendor-login'>
               <VendorLogin />
             </Route>
-            {/* </RedirectLogin> */}
             <AuthenticatedComponent>
-              <Route path='/vendor-dashboard'>
-                <VendorDashboard />
+                <Route path='/vendor-dashboard'>
+                  <VendorDashboard />
               </Route>
-            </AuthenticatedComponent>
-            {/* <AuthenticatedComponent> */}
               <Route path='/edit-vendor-details'>
                 <EditVendorDetails />
               </Route>
-            {/* </AuthenticatedComponent> */}
+            </AuthenticatedComponent>
           </Switch>
         </Router>
       </Container>

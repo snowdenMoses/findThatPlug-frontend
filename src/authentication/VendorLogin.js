@@ -1,18 +1,18 @@
 import React, {useState} from 'react'
-import LogInForm from '../forms/LoginForm'
+import SignIn from '../forms/MUI-signin'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
+import IsCurrentUser from '../authorization/IsCurrentUser'
 
 function VendorLogin() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const header = "Vendor Log In"
-  const token = localStorage.getItem('token')
 
   const history = useHistory()
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios.post("http://localhost:3000/api/v1/authenticate", {
+    axios.post("http://localhost:3000/authenticate", {
       email,
       password
     }).then(response => {
@@ -21,11 +21,12 @@ function VendorLogin() {
         history.push("/vendor-dashboard")
       }
     }).catch(error => alert(error.response.data.error))
-  //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
+
+  // if(IsCurrentUser) history.push('/vendor-dashboard')
   return (
     <div>
-      <LogInForm
+      <SignIn 
         email={email}
         setEmail={setEmail}
         password={password}

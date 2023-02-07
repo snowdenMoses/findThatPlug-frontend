@@ -1,8 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import UsersContext from '../context/context_api'
 
 function AllProducts() {
+  const [ _ , products] = useContext(UsersContext) 
   return (
-    <div>Show all Products</div>
+    <div>{products.map(product => {
+      return (
+        <h2>{product.name}</h2>
+      )
+    })}</div>
   )
 }
 

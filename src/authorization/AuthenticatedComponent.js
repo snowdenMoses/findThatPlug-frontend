@@ -17,16 +17,11 @@ const AuthenticatedComponent = (props) => {
             setError(err.message);
         }
     }, []);
-
     if (error) {
         return <Redirect to='/vendor-login' />
     }
-
     if (authenticated) {
         return props.children;
     }
-
-    return <div>Loading...</div>;
 }
-
 export default AuthenticatedComponent;

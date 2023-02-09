@@ -13,7 +13,7 @@ function VendorDashboard() {
 
   useEffect(() => {
     AxiosInstance
-      .get(`/${user_id}`)
+      .get(`/users/${user_id}`)
       .then((res) => {
         setUser(res.data)
         console.log("user",res.data)

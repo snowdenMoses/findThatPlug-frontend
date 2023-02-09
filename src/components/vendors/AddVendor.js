@@ -18,7 +18,7 @@ const AddVendor = () => {
     const history = useHistory()
     const handleSubmit = (e) => {
         e.preventDefault()
-        AxiosInstance.post("", {
+        AxiosInstance.post("/users", {
             first_name,
             last_name,
             email,

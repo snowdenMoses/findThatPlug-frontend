@@ -9,6 +9,7 @@ import AddVendor from './components/vendors/AddVendor';
 import CustomerLogin from './components/CustomerLogin';
 import EditVendorDetails from './components/vendors/EditVendorDetails';
 import VendorDashboard from './components/vendors/VendorDashboard';
+import AddProduct from './components/vendors/AddProduct';
 import AuthenticatedComponent from './authorization/AuthenticatedComponent';
 import RedirectLogin from './authorization/RedirectLogin';
 import VendorLogin from './authentication/VendorLogin';
@@ -43,6 +44,9 @@ function App() {
               </Route>
               <Route path='/edit-vendor-details'>
                 <EditVendorDetails />
+              </Route>
+              <Route path='/add-product'>
+                <AddProduct />
               </Route>
             </AuthenticatedComponent>
           </Switch>

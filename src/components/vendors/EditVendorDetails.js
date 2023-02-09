@@ -22,7 +22,7 @@ const EditVendorDetails = () => {
     const history = useHistory()
     const findRecords = () => {
         AxiosInstance
-            .get(`/${user_id}`)
+            .get(`/users/${user_id}`)
             .then((res) => {
                 setFirst_name(res.data.first_name)
                 setLast_name(res.data.last_name)
@@ -34,7 +34,7 @@ const EditVendorDetails = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        AxiosInstance.patch(`/${user_id}`, {
+        AxiosInstance.patch(`/users/${user_id}`, {
             first_name,
             last_name,
             email,

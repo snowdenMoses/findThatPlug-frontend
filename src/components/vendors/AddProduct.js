@@ -19,6 +19,7 @@ const AddProduct = () => {
     const [product_name, setProduct_Name] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
+    const [checkedState, setCheckedState] = useState()
     const [categories, setCategories] = useState([])
     const [categoriesUpload, setCategoriesUpload] = useState([])
     const [flashMessageState, setFlashMessageState] = useState()
@@ -28,41 +29,42 @@ const AddProduct = () => {
 
     const history = useHistory()
     const theme = createTheme();
-
     const getCategories = ()=>(
         AxiosInstance.get("/categories").then(response=>{
             setCategories(response.data.data)
         })
     )
+    const clearCheckBox = (e) => {
+        e.target.checked = false
+    }
     const handleCategoryChange = (e) => {
         const catValue = e.target.value
         const CBchecked = e.target.checked
-        // const filteredCategory = [...checked]
-        // const filteredArray = [...currentCategory]
-        const index = categoriesUpload.indexOf(catValue)
         if (CBchecked) {
             setCategoriesUpload([...categoriesUpload, catValue])
-
         }
         else if (!CBchecked) {
             setCategoriesUpload(categoriesUpload.filter(cat => cat!== catValue))
         }
-        console.log(categoriesUpload)
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        AxiosInstance.post("/users", {
+        AxiosInstance.post("/products", {
             name: product_name,
             description,
             price,
-            categories
+            categories: categoriesUpload
         }).then(response => {
             setFlashMessage(response.data.message)
             setFlashMessageState('success')
             setTimeout(() => {
                 setFlashMessageState('')
-                history.push("/vendor-dashboard")
+                // history.push("/vendor-dashboard")
             }, 4000)
+            setProduct_Name("")
+            setDescription("")
+            setPrice("")
+            setCheckedState(false)
 
         }).catch(error => {
             const errors = error.response.data.data
@@ -74,6 +76,7 @@ const AddProduct = () => {
                 }, 4000)
             }
         })
+        
     }
 
     useEffect(()=>{
@@ -138,14 +141,17 @@ const AddProduct = () => {
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
-                            <FormGroup>
-                               {categories.map((category,index)=>{
-                                //    console.log("category", )
+                            <FormGroup row>
+                               {categories.map((category)=>{
                                 return(
                                    <FormControlLabel 
-                                   value={category} 
-                                   control={<Checkbox 
-                                   onChange={handleCategoryChange} />} 
+                                   value={category.id} 
+                                   control={<Checkbox
+                                   checked ={checkedState}
+                                   onChange={(e)=>{
+                                    handleCategoryChange(e);
+                                    clearCheckBox(e)
+                                }} />} 
                                    label={category.name} />
                                )})}
                             </FormGroup>

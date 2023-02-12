@@ -6,6 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -19,7 +20,7 @@ const AddProduct = () => {
     const [product_name, setProduct_Name] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
-    const [checkedState, setCheckedState] = useState()
+    const [image, setImage] = useState()
     const [categories, setCategories] = useState([])
     const [categoriesUpload, setCategoriesUpload] = useState([])
     const [flashMessageState, setFlashMessageState] = useState()
@@ -53,7 +54,8 @@ const AddProduct = () => {
             name: product_name,
             description,
             price,
-            categories: categoriesUpload
+            categories: categoriesUpload,
+            image
         }).then(response => {
             setFlashMessage(response.data.message)
             setFlashMessageState('success')
@@ -64,7 +66,6 @@ const AddProduct = () => {
             setProduct_Name("")
             setDescription("")
             setPrice("")
-            setCheckedState(false)
 
         }).catch(error => {
             const errors = error.response.data.data
@@ -78,6 +79,7 @@ const AddProduct = () => {
         })
         
     }
+    console.log("Image", image)
 
     useEffect(()=>{
         getCategories()
@@ -141,16 +143,24 @@ const AddProduct = () => {
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
+                            <Input
+                                accept="image/*"
+                                fullWidth
+                                multiple
+                                type="file"
+                                margin="normal"
+                                required
+                                id="file"
+                                onChange={(e) => setImage(e.target.files[0])}
+                            />
                             <FormGroup row>
                                {categories.map((category)=>{
                                 return(
                                    <FormControlLabel 
                                    value={category.id} 
                                    control={<Checkbox
-                                   checked ={checkedState}
                                    onChange={(e)=>{
                                     handleCategoryChange(e);
-                                    clearCheckBox(e)
                                 }} />} 
                                    label={category.name} />
                                )})}

@@ -20,7 +20,7 @@ const AddProduct = () => {
     const [product_name, setProduct_Name] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
-    const [image, setImage] = useState()
+    const [imageUpload, setImageUpload] = useState()
     const [categories, setCategories] = useState([])
     const [categoriesUpload, setCategoriesUpload] = useState([])
     const [flashMessageState, setFlashMessageState] = useState()
@@ -35,9 +35,9 @@ const AddProduct = () => {
             setCategories(response.data.data)
         })
     )
-    const clearCheckBox = (e) => {
-        e.target.checked = false
-    }
+    const handleFileInput = (event) => {
+        setImageUpload(event.target.files[0]);
+    };
     const handleCategoryChange = (e) => {
         const catValue = e.target.value
         const CBchecked = e.target.checked
@@ -48,15 +48,16 @@ const AddProduct = () => {
             setCategoriesUpload(categoriesUpload.filter(cat => cat!== catValue))
         }
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        AxiosInstance.post("/products", {
-            name: product_name,
-            description,
-            price,
-            categories: categoriesUpload,
-            image
-        }).then(response => {
+        const formData = new FormData();
+        formData.append('name', product_name);
+        formData.append('description', description);
+        formData.append('categories', JSON.stringify(categoriesUpload));
+        formData.append('images', imageUpload);
+        formData.append('price', price);
+        try{
+           const response = await AxiosInstance.post("/products", formData)
             setFlashMessage(response.data.message)
             setFlashMessageState('success')
             setTimeout(() => {
@@ -66,8 +67,10 @@ const AddProduct = () => {
             setProduct_Name("")
             setDescription("")
             setPrice("")
-
-        }).catch(error => {
+            console.log("Image", response.data.image_url)
+            console.log("categoriesUpload", categoriesUpload)
+        }
+        catch(error){
             const errors = error.response.data.data
             for (error in errors) {
                 setFlashMessage(error + " " + errors[error][0])
@@ -76,11 +79,9 @@ const AddProduct = () => {
                     setFlashMessageState('')
                 }, 4000)
             }
-        })
+        }
         
     }
-    console.log("Image", image)
-
     useEffect(()=>{
         getCategories()
     },[])
@@ -151,7 +152,7 @@ const AddProduct = () => {
                                 margin="normal"
                                 required
                                 id="file"
-                                onChange={(e) => setImage(e.target.files[0])}
+                                onChange={handleFileInput}
                             />
                             <FormGroup row>
                                {categories.map((category)=>{

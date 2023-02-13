@@ -6,6 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -19,6 +20,7 @@ const AddProduct = () => {
     const [product_name, setProduct_Name] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
+    const [imageUpload, setImageUpload] = useState()
     const [categories, setCategories] = useState([])
     const [categoriesUpload, setCategoriesUpload] = useState([])
     const [flashMessageState, setFlashMessageState] = useState()
@@ -28,43 +30,47 @@ const AddProduct = () => {
 
     const history = useHistory()
     const theme = createTheme();
-
     const getCategories = ()=>(
         AxiosInstance.get("/categories").then(response=>{
             setCategories(response.data.data)
         })
     )
+    const handleFileInput = (event) => {
+        setImageUpload(event.target.files[0]);
+    };
     const handleCategoryChange = (e) => {
         const catValue = e.target.value
         const CBchecked = e.target.checked
-        // const filteredCategory = [...checked]
-        // const filteredArray = [...currentCategory]
-        const index = categoriesUpload.indexOf(catValue)
         if (CBchecked) {
             setCategoriesUpload([...categoriesUpload, catValue])
-
         }
         else if (!CBchecked) {
             setCategoriesUpload(categoriesUpload.filter(cat => cat!== catValue))
         }
-        console.log(categoriesUpload)
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        AxiosInstance.post("/users", {
-            name: product_name,
-            description,
-            price,
-            categories
-        }).then(response => {
+        const formData = new FormData();
+        formData.append('name', product_name);
+        formData.append('description', description);
+        formData.append('categories', JSON.stringify(categoriesUpload));
+        formData.append('images', imageUpload);
+        formData.append('price', price);
+        try{
+           const response = await AxiosInstance.post("/products", formData)
             setFlashMessage(response.data.message)
             setFlashMessageState('success')
             setTimeout(() => {
                 setFlashMessageState('')
-                history.push("/vendor-dashboard")
+                // history.push("/vendor-dashboard")
             }, 4000)
-
-        }).catch(error => {
+            setProduct_Name("")
+            setDescription("")
+            setPrice("")
+            console.log("Image", response.data.image_url)
+            console.log("categoriesUpload", categoriesUpload)
+        }
+        catch(error){
             const errors = error.response.data.data
             for (error in errors) {
                 setFlashMessage(error + " " + errors[error][0])
@@ -73,9 +79,9 @@ const AddProduct = () => {
                     setFlashMessageState('')
                 }, 4000)
             }
-        })
+        }
+        
     }
-
     useEffect(()=>{
         getCategories()
     },[])
@@ -138,14 +144,25 @@ const AddProduct = () => {
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
-                            <FormGroup>
-                               {categories.map((category,index)=>{
-                                //    console.log("category", )
+                            <Input
+                                accept="image/*"
+                                fullWidth
+                                multiple
+                                type="file"
+                                margin="normal"
+                                required
+                                id="file"
+                                onChange={handleFileInput}
+                            />
+                            <FormGroup row>
+                               {categories.map((category)=>{
                                 return(
                                    <FormControlLabel 
-                                   value={category} 
-                                   control={<Checkbox 
-                                   onChange={handleCategoryChange} />} 
+                                   value={category.id} 
+                                   control={<Checkbox
+                                   onChange={(e)=>{
+                                    handleCategoryChange(e);
+                                }} />} 
                                    label={category.name} />
                                )})}
                             </FormGroup>

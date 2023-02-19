@@ -3,7 +3,7 @@ name: Docker Build and Push
 on:
   push:
     branches:
-      - findthatplug-user
+      - main
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

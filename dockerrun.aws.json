@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
         "name": "findthatplug_front_end",
-        "image": ":snowdenmoses/findthatplug_front_end",
+        "image": ":snowdenmoses/ftpfrontend",
         "essential": true,
         "memory": 128
     }

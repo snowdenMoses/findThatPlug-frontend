@@ -23,6 +23,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ../
+          context: .
           push: true
-          tags: snowdenmoses/findthatplug_front_end:latest
+          tags: snowdenmoses/ftpfrontend:latest

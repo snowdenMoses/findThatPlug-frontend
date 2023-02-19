@@ -1,0 +1,11 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "containerDefinitions": [
+    {
+        "name": "findthatplug_front_end",
+        "image": ":snowdenmoses/findthatplug_front_end",
+        "essential": true,
+        "memory": 128
+    }
+    ]
+}

@@ -6,7 +6,7 @@ function Store({ children }) {
     const [products, setProducts] = useState([])
     useEffect(() => {
         axios
-            .get('/api/v1/users')
+            .get('/backend/api/v1/users')
             .then((res) => {
                 setUsers(res.data)
             })
@@ -15,7 +15,7 @@ function Store({ children }) {
             })
 
         axios
-            .get('/api/v1/products')
+            .get('/backend/api/v1/products')
             .then((res) => {
                 setProducts(res.data)
             })

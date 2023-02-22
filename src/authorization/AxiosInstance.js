@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const AxiosInstance = axios.create({
-    baseURL: '/api/v1',
+    baseURL: '/backend/api/v1',
     headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
     }

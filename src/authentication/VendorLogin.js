@@ -12,7 +12,7 @@ function VendorLogin() {
   const history = useHistory()
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios.post("/authenticate", {
+    axios.post("/backend/authenticate", {
       email,
       password
     }).then(response => {
